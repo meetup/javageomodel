@@ -3,8 +3,8 @@
 	<groupId>com.beoui</groupId>
 	<artifactId>geocell</artifactId>
 	<packaging>jar</packaging>
-	<name>GeocellJava</name>
-	<version>0.0.10-MUPLOG4J</version>
+	<name>GeocellJava-MUPLOG4J</name>
+	<version>0.0.10.1-SNAPSHOT</version>
 	<url>http://code.google.com/p/javageomodel</url>
 
 	<licenses>
@@ -15,7 +15,10 @@
 	</licenses>
 
 	<scm>
-		<developerConnection>scm:svn:https://javageomodel.googlecode.com/svn/trunk/geocell/</developerConnection>
+        <connection>scm:git:https://github.com/meetup/javageomodel.git</connection>
+        <developerConnection>scm:git:git@github.com:meetup/javageomodel.git</developerConnection>
+        <url>https://github.com/meetup/javageomodel</url>
+        <tag>HEAD</tag>
 	</scm>
 
 	<dependencies>
@@ -83,9 +86,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.1</version>
+				<version>2.4.2</version>
 				<configuration>
-					<tagBase>https://javageomodel.googlecode.com/svn/tags/geocell/</tagBase>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>release</releaseProfiles>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -125,12 +130,34 @@
 		</plugins>
 	</build>
 	<distributionManagement>
-		<repository>
-			<id>javageomodel-repo</id>
-			<url>svn:https://javageomodel.googlecode.com/svn/repository/</url>
-		</repository>
+        <repository>
+            <id>bintray</id>
+            <url>https://api.bintray.com/maven/danielsmeetup/maven/javageomodel</url>
+        </repository>
 	</distributionManagement>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
