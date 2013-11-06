@@ -3,6 +3,11 @@ meetup
 
 changed the original repo's GeocellLogger to use log4j
 
+publishing to bintray
+=====================
+
+see [wiki](https://github.com/meetup/javageomodel/wiki/Publishing-to-Bintray "Publishing To Bintray Instructions")
+
 javageomodel
 ============
 
