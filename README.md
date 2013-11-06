@@ -1,3 +1,8 @@
+meetup
+======
+
+changed the original repo's GeocellLogger to use log4j
+
 javageomodel
 ============
 
