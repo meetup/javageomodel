@@ -1,15 +1,16 @@
 package com.beoui.geocell;
 
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
-public final class GeocellLogger {
+public final class GeocellLogger extends Logger {
+	private static final String FQCN = "com.beoui.geocell";
 
-    private GeocellLogger() {
-        // no instantiation allowed
-    }
+	public GeocellLogger( String name ) {
+		super( FQCN + "." + name );
+	}
 
-    public static Logger get() {
-        return Logger.getLogger("com.beoui.geocell");
+	public static Logger get( Class cls ) {
+        return Logger.getLogger( cls.getName() );
     }
 
 }

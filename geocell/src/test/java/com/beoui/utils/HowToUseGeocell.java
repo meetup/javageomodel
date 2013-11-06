@@ -15,8 +15,6 @@ package com.beoui.utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.jdo.PersistenceManager;
 import javax.persistence.EntityManager;
@@ -29,6 +27,7 @@ import com.beoui.geocell.model.BoundingBox;
 import com.beoui.geocell.model.CostFunction;
 import com.beoui.geocell.model.GeocellQuery;
 import com.beoui.geocell.model.Point;
+import org.apache.log4j.Logger;
 
 /**
  * Unit test also used to explain how to use Geocell class.
@@ -38,7 +37,7 @@ import com.beoui.geocell.model.Point;
  */
 public class HowToUseGeocell extends TestCase {
 
-    private final Logger log = Logger.getLogger("com.beoui.utils");
+    private final Logger log = Logger.getLogger( HowToUseGeocell.class );
 
     /**
      * First step is to save your entities.
@@ -67,7 +66,7 @@ public class HowToUseGeocell extends TestCase {
         Assert.assertTrue(cells.size() > 0);
 
         // Show in the log what cells are going to be saved
-        log.log(Level.INFO, "Geocells to be saved for Point("+lat+","+lon+") are: "+cells);
+        log.info("Geocells to be saved for Point("+lat+","+lon+") are: "+cells);
     }
 
     /**
@@ -113,7 +112,7 @@ public class HowToUseGeocell extends TestCase {
         Assert.assertTrue(cells2.size() > 0);
 
         // Show in the log what cells shoud be used in the query
-        log.log(Level.INFO, "Geocells to use in query for PointSW("+latS+","+lonW+") ; PointNE("+latN+","+lonE+") are: "+cells);
+        log.info("Geocells to use in query for PointSW("+latS+","+lonW+") ; PointNE("+latN+","+lonE+") are: "+cells);
     }
 
     /**

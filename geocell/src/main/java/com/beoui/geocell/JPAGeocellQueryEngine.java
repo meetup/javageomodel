@@ -1,16 +1,16 @@
 package com.beoui.geocell;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import com.beoui.geocell.model.GeocellQuery;
+import org.apache.log4j.Logger;
 
 public class JPAGeocellQueryEngine implements GeocellQueryEngine {
 
-    private static final Logger logger = GeocellLogger.get();
+    private static final Logger logger = GeocellLogger.get( JPAGeocellQueryEngine.class );
 
     private final static String ORDER_BY_RE = "[Oo][Rr][Dd][Ee][Rr]\\s*[Bb][Yy]";
 	private final static String WHERE_RE = "[Ww][Hh][Ee][Rr][Ee]";

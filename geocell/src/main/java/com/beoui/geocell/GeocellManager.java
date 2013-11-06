@@ -6,8 +6,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.jdo.PersistenceManager;
 import javax.persistence.EntityManager;
@@ -23,6 +21,7 @@ import com.beoui.geocell.model.GeocellQuery;
 import com.beoui.geocell.model.LocationCapable;
 import com.beoui.geocell.model.Point;
 import com.beoui.geocell.model.Tuple;
+import org.apache.log4j.Logger;
 
 /**
 #
@@ -112,7 +111,7 @@ public class GeocellManager {
     // Function used if no custom function is used in bestBboxSearchCells method
     private static final CostFunction DEFAULT_COST_FUNCTION = new DefaultCostFunction();
 
-    private static final Logger logger = GeocellLogger.get();
+    private static final Logger logger = GeocellLogger.get( GeocellManager.class );
 
     /**
      * Returns the list of geocells (all resolutions) that are containing the point
@@ -202,7 +201,7 @@ public class GeocellManager {
                 break;
             }
         }
-        logger.log(Level.INFO, "Calculate cells "+StringUtils.join(minCostCellSet, ", ")+" in box ("+bbox.getSouth()+","+bbox.getWest()+") ("+bbox.getNorth()+","+bbox.getEast()+")");
+        logger.info("Calculate cells "+StringUtils.join(minCostCellSet, ", ")+" in box ("+bbox.getSouth()+","+bbox.getWest()+") ("+bbox.getNorth()+","+bbox.getEast()+")");
         return minCostCellSet;
     }
 
@@ -380,7 +379,7 @@ public class GeocellManager {
 
            List<T> newResultEntities = queryEngine.query(baseQuery, curGeocellsUnique, entityClass);
 
-           logger.log(Level.FINE, "fetch complete for: " + StringUtils.join(curGeocellsUnique, ", "));
+           logger.debug("fetch complete for: " + StringUtils.join(curGeocellsUnique, ", "));
 
            searchedCells.addAll(curGeocells);
 
@@ -464,21 +463,21 @@ public class GeocellManager {
 
            // We don't have enough items yet, keep searching.
            if(results.size() < maxResults) {
-               logger.log(Level.FINE,  results.size()+" results found but want "+maxResults+" results, continuing search.");
+               logger.debug(results.size()+" results found but want "+maxResults+" results, continuing search.");
                continue;
            }
 
-           logger.log(Level.FINE, results.size()+" results found.");
+           logger.debug(results.size()+" results found.");
 
            // If the currently max_results'th closest item is closer than any
            // of the next test geocells, we're done searching.
            double currentFarthestReturnableResultDist = GeocellUtils.distance(center, GeocellUtils.getLocation(results.get(maxResults - 1).getFirst()));
            if (closestPossibleNextResultDist >=
                currentFarthestReturnableResultDist) {
-               logger.log(Level.FINE, "DONE next result at least "+closestPossibleNextResultDist+" away, current farthest is "+currentFarthestReturnableResultDist+" dist");
+               logger.debug("DONE next result at least "+closestPossibleNextResultDist+" away, current farthest is "+currentFarthestReturnableResultDist+" dist");
                break;
            }
-           logger.log(Level.FINE, "next result at least "+closestPossibleNextResultDist+" away, current farthest is "+currentFarthestReturnableResultDist+" dist");
+           logger.debug("next result at least "+closestPossibleNextResultDist+" away, current farthest is "+currentFarthestReturnableResultDist+" dist");
        }
        List<T> result = new ArrayList<T>();
        for(Tuple<T, Double> entry : results.subList(0, Math.min(maxResults, results.size()))) {
@@ -488,7 +487,7 @@ public class GeocellManager {
         	   logger.info("Discarding result " + entry.getFirst() + " because distance " + entry.getSecond() + "m > max distance " + maxDistance + "m");
            }
        }
-       logger.log(Level.INFO, "Proximity query looked in "+ searchedCells.size() +" geocells and found "+result.size()+" results.");
+       logger.debug("Proximity query looked in "+ searchedCells.size() +" geocells and found "+result.size()+" results.");
        return result;
    }
 
